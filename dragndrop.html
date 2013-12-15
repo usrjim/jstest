@@ -1,0 +1,43 @@
+<html>
+<head>
+<title></title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8"/>
+<style>
+#box { width:100px; height:50px; border: 2px solid black; background-color: green; position: absolute; }
+#bar { width:100%; height:20px; border-bottom: 1px solid black; background-color: blue; cursor: pointer; }
+</style>
+</head>
+<body>
+
+<div id="box">
+  <div id="bar"></div>
+</div>
+
+<script>
+(function() {
+  var box = document.getElementById('box')
+    , bar = document.getElementById('bar')
+    , md = 0;
+  bar.addEventListener('mousedown', function(e) {
+    md = 1;
+    this.style.cursor = 'move';
+  });
+  bar.addEventListener('mousemove', function(e) {
+    if (md === 1) {
+      box.style.left = (e.clientX - this.clientWidth / 2) + 'px';
+      box.style.top = (e.clientY - this.clientHeight / 2) + 'px';
+    }
+  });
+  bar.addEventListener('mouseup', function(e) {
+    md = 0;
+    this.style.cursor = 'pointer';
+  });
+  bar.addEventListener('mouseout', function(e) {
+    md = 0;
+    this.style.cursor = 'pointer';
+  });
+  
+})();
+</script>
+</body>
+</html>
