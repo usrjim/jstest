@@ -1,0 +1,22 @@
+<!doctype html>
+
+<html>
+<meta charset="utf-8">
+<body id="body">
+
+<form><input type="text" size="40" id="console"></form>
+
+<script>
+(function(){
+  var c = document.getElementById('console');
+  var body = document.getElementById('body');
+  body.addEventListener('keyup', function(e){
+    var k = e.keyCode;
+    c.value = k;
+  });
+})();
+</script>
+
+</body>
+
+</html>

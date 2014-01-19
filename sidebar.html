@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>sidebar</title>
+  <style>
+    #sidebar {
+      width:200px;
+      height: 300px;
+      border: 1px solid black;
+      padding: 5px;
+      position:relative;
+      float:left;
+    }
+    #control {
+      width:10px;
+      height:60px;
+      position:absolute;
+      right:0;
+      top: 35%;
+      background-color: red;
+      cursor: pointer;
+    }
+    .content {
+      float:left;
+    }
+  </style>
+</head>
+<body>
+  <div id="wrapper">
+    <div id="sidebar">
+      <ul>
+        <li>one</li>
+        <li>two</li>
+        <li>three</li>
+      </ul>
+      <div id="control"></div>
+    </div>
+    <div class="content">
+      <pre>
+      jdkfsfjlskdflsdjflsdjf
+      djsksdlkj
+      dsjfsdj
+      fksdjskd
+      sdfjsd
+      fj
+      skfjd
+      kfjsdfjd
+      fjs
+      fj
+      </pre>
+    </div>
+  </div>
+<script>
+  (function(){
+    var box = document.querySelector("#sidebar"),
+        ul = document.querySelector("ul"),
+        control = document.querySelector("#control"),
+        state = 1; // 0: collapsed; 1: expanded
+    var collapseAction = function(){
+      box.style.width = 0;
+      ul.style.display = "none";
+    };
+    var expandAction = function(){
+      box.style.width = "200px";
+      ul.style.display = "block";
+    };
+    control.addEventListener("click", function(){
+      state = (state === 1) ? 0 : 1;
+      (state === 1) ? (expandAction)() : (collapseAction)();
+    });
+  })();
+</script>  
+</body>
+</html>
