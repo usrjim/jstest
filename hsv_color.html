@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>HSV</title>
+  <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
+  <style>
+  #box { width: 300px; height: 300px; border: 1px solid black; margin-bottom: 20px; }
+  .in { padding:5px; border: 1px dotted gray; }
+  </style>
+</head>
+<body>
+
+<div id="box"></div>
+
+<div>
+  H<input type="text" id='h' class='in' name="h" size="5" value="210">
+  S<input type="text" id='s' class='in' name="s" size="5" value="50">
+  V<input type="text" id='v' class='in' name="v" size="5" value="60">
+  <input type="button" id='set' value="Set">
+</div>
+
+<script>
+  (function() {
+    var eva = function() {
+      var c = $('#h').val() + ',' + $('#s').val() + '%,' + $('#v').val() + '%';
+      $('#box').css('background-color', 'hsl(' + c + ')');
+    };
+    $('.in').bind('click', function() { $(this).select(); });
+    $('.in').bind('keypress', function(e) {
+      var code = e.keyCode || e.which;
+      if(code == 13) { eva() }
+    });
+    $('#set').bind('click', eva);
+  })();
+</script>
+</body>
+</html>
