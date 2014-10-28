@@ -2,29 +2,96 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>HSV</title>
+  <title>HSL</title>
   <script src="http://code.jquery.com/jquery-2.1.0.min.js"></script>
   <style>
-  #box { width: 300px; height: 300px; border: 1px solid black; margin-bottom: 20px; }
+  div { margin-bottom: 20px; }
+  #box { width: 300px; height: 300px; border: 1px solid black;}
   .in { padding:5px; border: 1px dotted gray; }
   </style>
+  <script>
+  function hsl2hex(h, s, l) {
+
+      var r, g, b, m, c, x;
+
+      if (!isFinite(h)) h = 0;
+      if (!isFinite(s)) s = 0;
+      if (!isFinite(l)) l = 0;
+      h /= 60;
+      if (h < 0) h = 6 - (-h % 6)
+        h %= 6;
+
+      s = Math.max(0, Math.min(1, s / 100));
+      l = Math.max(0, Math.min(1, l / 100));
+
+      c = (1 - Math.abs((2 * l) - 1)) * s;
+      x = c * (1 - Math.abs((h % 2) - 1));
+
+      if (h < 1) {
+        r = c;
+        g = x;
+        b = 0;
+      } else if (h < 2) {
+        r = x;
+        g = c;
+        b = 0;
+      } else if (h < 3) {
+        r = 0;
+        g = c;
+        b = x;
+      } else if (h < 4) {
+        r = 0;
+        g = x;
+        b = c;
+      } else if (h < 5) {
+        r = x;
+        g = 0;
+        b = c;
+      } else {
+        r = c;
+        g = 0;
+        b = x;
+      }
+
+      m = l - c / 2;
+      r = Math.round((r + m) * 255);
+      g = Math.round((g + m) * 255);
+      b = Math.round((b + m) * 255);
+
+      return rgb2hex(r, g, b);
+    }
+    function component2hex(c) {
+      var hex = c.toString(16);
+      return hex.length == 1 ? "0" + hex : hex;
+    }
+
+    function rgb2hex(r, g, b) {
+      return "#" + component2hex(r) + component2hex(g) + component2hex(b);
+    }
+  </script>
 </head>
 <body>
 
 <div id="box"></div>
 
 <div>
-  H<input type="text" id='h' class='in' name="h" size="5" value="210">
-  S<input type="text" id='s' class='in' name="s" size="5" value="50">
-  V<input type="text" id='v' class='in' name="v" size="5" value="60">
+  H <input type="text" id='h' class='in' name="h" size="5" value="210">
+  S <input type="text" id='s' class='in' name="s" size="5" value="50">
+  L <input type="text" id='l' class='in' name="l" size="5" value="60">
   <input type="button" id='set' value="Set">
 </div>
+
+<div>Hex <input type="text" id='hex' class='in'></div>
 
 <script>
   (function() {
     var eva = function() {
-      var c = $('#h').val() + ',' + $('#s').val() + '%,' + $('#v').val() + '%';
-      $('#box').css('background-color', 'hsl(' + c + ')');
+      var h = $('#h').val();
+      var s = $('#s').val();
+      var l = $('#l').val();
+      var hsl = h + ',' + s + '%,' + l + '%';
+      $('#box').css('background-color', 'hsl(' + hsl + ')');
+      $('#hex').val(hsl2hex(h, s, l));
     };
     $('.in').bind('click', function() { $(this).select(); });
     $('.in').bind('keypress', function(e) {
